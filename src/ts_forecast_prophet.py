@@ -11,8 +11,8 @@ class ProphetForecast:
         self.future = None
         self.forecast = None
         
-    def set_future(self, period:int = 365):
-        self.future = self.model.make_future_dataframe(periods=period)
+    def set_future(self, period:int = 365, freq: str = 'M'):
+        self.future = self.model.make_future_dataframe(periods=period,  freq=freq)
 
     def prophet_fit(self, timeseries:pd.DataFrame = None):
         "Fit the Prophet model"

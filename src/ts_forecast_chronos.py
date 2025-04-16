@@ -21,7 +21,7 @@ class ChronosForecast:
 
     def get_context(self):
         "Get context from tensor timeseries"
-        self.context = torch.tensor(self.timeseries)
+        self.context = torch.tensor(self.timeseries, dtype=torch.int64)
     
     def get_confident_interval(self):
         "Get the CI with 90% interval"

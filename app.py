@@ -20,6 +20,8 @@ if uploaded_file is not None:
         key="Prophet",
         options=["Prophet", "Chronos"],
     )
+
+    
     prediction_length = st.slider("Select a range of prediction_length", 1, 200, 1)
 
     
@@ -37,7 +39,7 @@ if uploaded_file is not None:
     else:
       series_feature_name = None
       time_feature_name = None
-
+      freq = st.radio("Select the Frequency Time Range?", key='M', options = ["M", "D", 'Y'], horizontal=True)
       time_feature_name = st.sidebar.selectbox(
           "Select feature which is time?",
           list_columns,
@@ -54,9 +56,8 @@ if uploaded_file is not None:
       if (time_feature_name is not None)&(series_feature_name is not None):
         df = map_feature(df=df, time_feature=time_feature_name, series_feature=series_feature_name)
         prophet = ProphetForecast(timeseries=df)
-        st.write(prophet.timeseries)
         prophet.prophet_fit()
-        prophet.set_future(period=prediction_length)
+        prophet.set_future(period=prediction_length, freq=freq)
         prophet.prophet_predict()
         fig = prophet.prophet_plot_pyplot()
         st.pyplot(fig)
